@@ -1,0 +1,22 @@
+image: python:latest
+
+stages:
+- test
+
+1-make_seq_MT:
+  script: python3 test-1-make_seq_MT.py
+
+2-M_opp_bin:
+  script: python3 test-2-M_opp_bin.py
+
+3-make-cond-MT:
+  script: python3 test-3-make-cond-MT.py
+
+4-make_loop:
+  script : python3 test-4-make_loop.py
+
+5-machines:
+  script : python3 test-5-machines.py
+
+
+
