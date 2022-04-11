@@ -29,13 +29,6 @@ d_e = [((0,"a"),(1,"a","L")),((0,"b"),(2,"b","L")),((0,"S"),(3,"S","L")), ((0,"D
 
 M_e = (d_e, 0, 10, 11)
 
-d_isneg = [((0,"0"),(1,"0","R")), ((0,"1"),(2,"1","R")), \
-           ((1,"0"),(1,"0","R")), ((1,"1"),(2,"1","R")), ((1,"Z"),(3,"Z","L")),\
-           ((2,"0"),(1,"0","R")), ((2,"1"),(2,"1","R")), ((2,"Z"),(4,"Z","L")),\
-           ((3,"0"),(3,"0","L")), ((3,"1"),(3,"1","L")), ((3,"Z"),(5,"Z","R")),\
-           ((4,"0"),(4,"0","L")), ((4,"1"),(4,"1","L")), ((4,"Z"),(6,"Z","R"))]
-
-M_isneg =(d_isneg,0,6,5)
 
 
 # arithmetique unaire
@@ -77,6 +70,8 @@ d_prop1 = [((0,"0"),(1,"0","R")), ((0,"1"),(2,"1","R")), \
 
 M_prop1 =(d_prop1,0,4,5)
 
+d_id = []
+M_id = (d_id, 0, 0, 1)
 
 def test_noms_etats(d,d1,d2):
 	expected = []
@@ -111,6 +106,8 @@ d1=[(((1, 0), '0'), ((1, 0), '1', 'R')), (((1, 0), '1'), ((1, 0), '0', 'R')), ((
 d2=[(((1, 0), 'a'), ((1, 0), 'a', 'R')), (((1, 0), 'b'), ((1, 0), 'b', 'R')), (((1, 0), 'S'), ((1, 0), 'S', 'R')), (((1, 0), 'D'), ((1, 0), 'D', 'R')), (((1, 0), 'Z'), ((2, 0), 'Z', 'L')), (((2, 0), 'a'), ((2, 0), 'a', 'L')), (((2, 0), 'b'), ((2, 0), 'b', 'L')), (((2, 0), 'S'), ((2, 0), 'S', 'L')), (((2, 0), 'D'), ((2, 1), 'D', 'L'))]
 
 d3=[(((1, (1, 0)), 'a'), ((1, (1, 0)), 'a', 'R')), (((1, (1, 0)), 'b'), ((1, (1, 0)), 'b', 'R')), (((1, (1, 0)), 'S'), ((1, (1, 0)), 'S', 'R')), (((1, (1, 0)), 'D'), ((1, (1, 0)), 'D', 'R')), (((1, (1, 0)), 'Z'), ((1, (2, 0)), 'Z', 'L')), (((1, (2, 0)), 'a'), ((1, (2, 0)), 'a', 'L')), (((1, (2, 0)), 'b'), ((1, (2, 0)), 'b', 'L')), (((1, (2, 0)), 'S'), ((1, (2, 0)), 'S', 'L')), (((1, (2, 0)), 'D'), ((2, 0), 'D', 'L')), (((2, 0), 'a'), ((2, 1), 'a', 'L')), (((2, 0), 'b'), ((2, 2), 'b', 'L')), (((2, 0), 'S'), ((2, 3), 'S', 'L')), (((2, 0), 'D'), ((2, 4), 'D', 'L')), (((2, 1), 'a'), ((2, 5), 'a', 'R')), (((2, 1), 'b'), ((2, 6), 'a', 'R')), (((2, 1), 'D'), ((2, 8), 'a', 'R')), (((2, 1), 'S'), ((2, 7), 'a', 'R')), (((2, 2), 'a'), ((2, 5), 'b', 'R')), (((2, 2), 'b'), ((2, 6), 'b', 'R')), (((2, 2), 'D'), ((2, 8), 'b', 'R')), (((2, 2), 'S'), ((2, 7), 'b', 'R')), (((2, 3), 'a'), ((2, 5), 'S', 'R')), (((2, 3), 'b'), ((2, 6), 'S', 'R')), (((2, 3), 'D'), ((2, 8), 'S', 'R')), (((2, 3), 'S'), ((2, 7), 'S', 'R')), (((2, 4), 'a'), ((2, 5), 'D', 'R')), (((2, 4), 'b'), ((2, 6), 'D', 'R')), (((2, 4), 'D'), ((2, 8), 'D', 'R')), (((2, 4), 'S'), ((2, 7), 'D', 'R')), (((2, 5), 'a'), ((2, 9), 'a', 'R')), (((2, 5), 'b'), ((2, 9), 'a', 'R')), (((2, 5), 'S'), ((2, 9), 'a', 'R')), (((2, 5), 'D'), ((2, 9), 'a', 'R')), (((2, 6), 'a'), ((2, 9), 'b', 'R')), (((2, 6), 'b'), ((2, 9), 'b', 'R')), (((2, 6), 'S'), ((2, 9), 'b', 'R')), (((2, 6), 'D'), ((2, 9), 'b', 'R')), (((2, 7), 'a'), ((2, 9), 'S', 'R')), (((2, 7), 'b'), ((2, 9), 'S', 'R')), (((2, 7), 'S'), ((2, 9), 'S', 'R')), (((2, 7), 'D'), ((2, 9), 'S', 'R')), (((2, 8), 'a'), ((2, 9), 'D', 'R')), (((2, 8), 'b'), ((2, 9), 'D', 'R')), (((2, 8), 'S'), ((2, 9), 'D', 'R')), (((2, 8), 'D'), ((2, 9), 'S', 'R')), (((2, 9), 'a'), ((2, 10), 'a', 'L')), (((2, 9), 'b'), ((2, 10), 'b', 'L')), (((2, 9), 'S'), ((2, 10), 'S', 'R')), (((2, 9), 'D'), ((2, 10), 'D', 'R')), (((2, 9), 'Z'), ((2, 10), 'Z', 'L'))]
+
+
 print("\n\n----------------------------------------------\n\n")
 print("Test 1 : make_seq_MT")
 print("---------------------------")
@@ -154,3 +151,54 @@ assert b3==True, "Erreur dans le langage accepte"
 assert L3==["b","a","D","a","b","Z"], "Erreur dans la bande a la fin du calcul"
 (b3,i3,L3) = exec_MT_1((d_comp,q0_comp,qok_comp,qko_comp), ["a","b","a","b"],0)
 assert b3 == False, "Erreur dans le langage accepte"
+
+print("\n\n----------------------------------------------\n\n")
+print("Test 4 : make_seq_MT")
+print("---------------------------")
+(d_comp,q0_comp,qok_comp,qko_comp)= make_seq_MT(M_ex1,M_id)
+#assert test_noms_etats(d_comp,d,d_id), "Erreur dans les noms d'etats de la machine sequence"
+#assert eq_set_trans(d_comp, d3), "Erreur dans les transitions de make_seq_MT"
+#assert q0_comp==(1,(1,0)), "mauvais etat initial"
+#assert qok_comp ==(2,10), "mauvais etat acceptant"
+#assert qko_comp == (2,11), "mauvais etat rejetant"
+(b3,i3,L3) = exec_MT_1((d_comp,q0_comp,qok_comp,qko_comp), ["A","B","A","B","B"],0)
+assert b3==True, "Erreur dans le langage accepte, composition avec machine vide"
+assert L3==["A","B","A","B","B"], "Erreur dans la bande a la fin du calcul, composition avec machine vide"
+(b3,i3,L3) = exec_MT_1((d_comp,q0_comp,qok_comp,qko_comp), ["Z"],0)
+assert b3 == False, "Erreur dans le langage accepte, composition avec machine vide"
+assert L3 == ["Z"], "Erreur dans la bande a la fin du calcul, composition avec machine vide"
+
+
+print("\n\n----------------------------------------------\n\n")
+print("Test 5 : make_seq_MT")
+print("---------------------------")
+(d_comp,q0_comp,qok_comp,qko_comp)= make_seq_MT(M_succ_un,M_id)
+#assert test_noms_etats(d_comp,d,d_id), "Erreur dans les noms d'etats de la machine sequence"
+#assert eq_set_trans(d_comp, d3), "Erreur dans les transitions de make_seq_MT"
+#assert q0_comp==(1,(1,0)), "mauvais etat initial"
+#assert qok_comp ==(2,10), "mauvais etat acceptant"
+#assert qko_comp == (2,11), "mauvais etat rejetant"
+(b3,i3,L3) = exec_MT_1((d_comp,q0_comp,qok_comp,qko_comp), ["I","I","I","I","Z"],0)
+assert b3==True, "Erreur dans le langage accepte, composition avec machine vide"
+assert i3 == 1, "Erreur dans la position de la tete de lecture a la fin du calcul, composition avec machine vide"
+assert L3==["Z","I","I","I","I","I"], "Erreur dans la bande a la fin du calcul, composition avec machine vide"
+(b3,i3,L3) = exec_MT_1((d_comp,q0_comp,qok_comp,qko_comp), ["Z"],0)
+assert b3 == True, "Erreur dans le langage accepte, composition avec machine vide"
+assert L3 == ["Z","I"], "Erreur dans la bande a la fin du calcul, composition avec machine vide"
+
+print("\n\n----------------------------------------------\n\n")
+print("Test 6 : make_seq_MT")
+print("---------------------------")
+(d_comp,q0_comp,qok_comp,qko_comp)= make_seq_MT(M_id,M_succ_un)
+#assert test_noms_etats(d_comp,d,d_id), "Erreur dans les noms d'etats de la machine sequence"
+#assert eq_set_trans(d_comp, d3), "Erreur dans les transitions de make_seq_MT"
+#assert q0_comp==(1,(1,0)), "mauvais etat initial"
+#assert qok_comp ==(2,10), "mauvais etat acceptant"
+#assert qko_comp == (2,11), "mauvais etat rejetant"
+(b3,i3,L3) = exec_MT_1((d_comp,q0_comp,qok_comp,qko_comp), ["I","I","I","I","Z"],0)
+assert b3==True, "Erreur dans le langage accepte, composition avec machine vide"
+assert i3 == 1, "Erreur dans la position de la tete de lecture a la fin du calcul, composition avec machine vide"
+assert L3==["Z","I","I","I","I","I"], "Erreur dans la bande a la fin du calcul, composition avec machine vide"
+(b3,i3,L3) = exec_MT_1((d_comp,q0_comp,qok_comp,qko_comp), ["Z"],0)
+assert b3 == True, "Erreur dans le langage accepte, composition avec machine vide"
+assert L3 == ["Z","I"], "Erreur dans la bande a la fin du calcul, composition avec machine vide"
