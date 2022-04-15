@@ -93,7 +93,23 @@ def exec_seq_MT_1(M1,M2,L,i1):
 
 def make_seq_MT(M1,M2):
     # M1,M2 : machines de Turing deterministes a 1 bande
-    return
+    d1,q1_0,q1_ok,q1_ko = M1
+    d2,q2_0,q2_ok,q2_ko = M2
+    nd = []
+    for c,n in d1:
+        p,S = c
+        q,E,m = n
+        if q == q1_ok:
+            nd+=[(((1,p),S),((2,q2_0),E,m))]
+        elif q == q1_ko:
+            nd+=[(((1,p),S),((2,q2_ko),E,m))]
+        else:
+            nd+=[(((1,p),S),((1,q),E,m))]
+    for c,n in d2:
+        p,S = c
+        q,E,m = n
+        nd+=[(((2,p),S),((2,q),E,m))]
+    return (nd,(1,q1_0),(2,q2_ok),(2,q2_ko))
 
 # Composition de machines de Turing : conditionnelle
 #---------------------------------------------------
