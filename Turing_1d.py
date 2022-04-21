@@ -75,6 +75,7 @@ def exec_MT_1(M,L,i0):
             else:
                 t -= 1
                 if t < 0:
+                    t = 0
                     L.insert(0,"Z")
         else:
             break

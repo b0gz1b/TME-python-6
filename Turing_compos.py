@@ -6,6 +6,8 @@
 
 from Turing_1d import *
 
+from ensembles import *
+
 # Machines de Turing utiles pour le TME
 #---------------------------------------
 
@@ -95,21 +97,36 @@ def make_seq_MT(M1,M2):
     # M1,M2 : machines de Turing deterministes a 1 bande
     d1,q1_0,q1_ok,q1_ko = M1
     d2,q2_0,q2_ok,q2_ko = M2
-    nd = []
-    for c,n in d1:
-        p,S = c
-        q,E,m = n
-        if q == q1_ok:
-            nd+=[(((1,p),S),((2,q2_0),E,m))]
-        elif q == q1_ko:
-            nd+=[(((1,p),S),((2,q2_ko),E,m))]
-        else:
-            nd+=[(((1,p),S),((1,q),E,m))]
-    for c,n in d2:
-        p,S = c
-        q,E,m = n
-        nd+=[(((2,p),S),((2,q),E,m))]
-    return (nd,(1,q1_0),(2,q2_ok),(2,q2_ko))
+
+    if d1 == []:
+        return M2
+    if d2 == []:
+        return M1
+
+    eq_assoc = make_eq_set(make_eq_set(eq_atom))
+
+    d_2 = []
+
+    for (q1,a1),(q2,a2,m) in d2:
+        d_2 = ajout(eq_assoc,(((2,q1),a1),((2,q2),a2,m)),d_2)
+
+    d_nk = []
+    d_ok1 = []
+    d_ko1 = []
+
+    for (q1,a1),(q2,a2,m) in d1:
+        if not eq_atom(q2,q1_ok) and not eq_atom(q2,q1_ko):
+            d_nk = ajout(eq_assoc,(((1,q1),a1),((1,q2),a2,m)),d_nk)
+        elif eq_atom(q2,q1_ok):
+            d_ok1 = ajout(eq_assoc,(((1,q1),a1),((2,q2_0),a2,m)),d_ok1)
+        elif eq_atom(q2,q1_ko):
+            d_ko1 = ajout(eq_assoc,(((1,q1),a1),((2,q2_ko),a2,m)),d_ko1)
+
+    d = union(eq_assoc,union(eq_assoc,union(eq_assoc,d_2,d_nk),d_ok1),d_ko1)
+
+    return (d,(1,q1_0),(2,q2_ok),(2,q2_ko))
+
+M_opp_int_bin = ([(((1, 1), 'Z'), ((2, 0), 'Z', 'R')), (((2, 0), '0'), ((2, 1), '1', 'L')), (((2, 0), '1'), ((2, 0), '0', 'R')), (((2, 0), 'Z'), ((2, 2), '1', 'R')), (((2, 1), '0'), ((2, 1), '0', 'L')), (((2, 1), '1'), ((2, 1), '1', 'L')), (((2, 1), 'Z'), ((2, 3), 'Z', 'R')), (((2, 2), 'Z'), ((2, 1), 'Z', 'L')), (((1, 1), '1'), ((1, 1), '1', 'L')), (((1, 1), '0'), ((1, 1), '0', 'L')), (((1, 0), 'Z'), ((1, 1), 'Z', 'L')), (((1, 0), '1'), ((1, 0), '0', 'R')), (((1, 0), '0'), ((1, 0), '1', 'R'))],(1, 0),(2, 3),(2, 4))
 
 # Composition de machines de Turing : conditionnelle
 #---------------------------------------------------
@@ -123,8 +140,48 @@ def exec_cond_MT_1(MC,M1,M2,L,i0):
 
 
 def make_cond_MT(MC,M1,M2):
-    # MC, M1, M2 : machines de Turing deterministes a 1 bande
-    return
+     # M1,M2 : machines de Turing deterministes a 1 bande
+    dc,qc_0,qc_ok,qc_ko = MC
+    d1,q1_0,q1_ok,q1_ko = M1
+    d2,q2_0,q2_ok,q2_ko = M2
+
+    if dc == []:
+        return M1
+
+    eq_assoc = make_eq_set(make_eq_set(eq_atom))
+
+    d_2 = []
+
+    for (q1,a1),(q2,a2,m) in d2:
+        d_2 = ajout(eq_assoc,(((2,q1),a1),((2,q2),a2,m)),d_2)
+
+    d_nkC = []
+    d_nk = []
+    d_okC = []
+    d_ok1 = []
+    d_koC = []
+    d_ko1 = []
+
+    for (q1,a1),(q2,a2,m) in d1:
+        if not eq_atom(q2,q1_ok) and not eq_atom(q2,q1_ko):
+            d_nk = ajout(eq_assoc,(((1,q1),a1),((1,q2),a2,m)),d_nk)
+        elif eq_atom(q2,q1_ok):
+            d_ok1 = ajout(eq_assoc,(((1,q1),a1),((2,q2_ok),a2,m)),d_ok1)
+        elif eq_atom(q2,q1_ko):
+            d_ko1 = ajout(eq_assoc,(((1,q1),a1),((2,q2_ko),a2,m)),d_ko1)
+    for (q1,a1),(q2,a2,m) in dc:
+        if not eq_atom(q2,qc_ok) and not eq_atom(q2,qc_ko):
+            d_nkC = ajout(eq_assoc,(((0,q1),a1),((0,q2),a2,m)),d_nkC)
+        elif eq_atom(q2,qc_ok):
+            d_okC = ajout(eq_assoc,(((0,q1),a1),((1,q1_0),a2,m)),d_okC)
+        elif eq_atom(q2,qc_ko):
+            d_koC = ajout(eq_assoc,(((0,q1),a1),((2,q2_0),a2,m)),d_koC)       
+
+    d = union(eq_assoc,union(eq_assoc,union(eq_assoc,union(eq_assoc,union(eq_assoc,union(eq_assoc,d_2,d_nk),d_ok1),d_ko1),d_nkC),d_okC),d_koC)
+
+    return (d,(0,qc_0),(2,q2_ok),(2,q2_ko))
+
+M_abs = ([(((0, 4), 'Z'), ((1, (1, 0)), 'Z', 'R')), (((1, (1, 1)), 'Z'), ((1, (2, 0)), 'Z', 'R')), (((1, (2, 0)), '0'), ((1, (2, 1)), '1', 'L')), (((1, (2, 0)), '1'), ((1, (2, 0)), '0', 'R')), (((1, (2, 0)), 'Z'), ((1, (2, 2)), '1', 'R')), (((1, (2, 1)), '0'), ((1, (2, 1)), '0', 'L')), (((1, (2, 1)), '1'), ((1, (2, 1)), '1', 'L')), (((1, (2, 2)), 'Z'), ((1, (2, 1)), 'Z', 'L')), (((1, (1, 1)), '1'), ((1, (1, 1)), '1', 'L')), (((1, (1, 1)), '0'), ((1, (1, 1)), '0', 'L')), (((1, (1, 0)), 'Z'), ((1, (1, 1)), 'Z', 'L')), (((1, (1, 0)), '1'), ((1, (1, 0)), '0', 'R')), (((1, (1, 0)), '0'), ((1, (1, 0)), '1', 'R')), (((1, (2, 1)), 'Z'), ((2, 0), 'Z', 'R')), (((0, 4), '1'), ((0, 4), '1', 'L')), (((0, 4), '0'), ((0, 4), '0', 'L')), (((0, 3), '1'), ((0, 3), '1', 'L')), (((0, 3), '0'), ((0, 3), '0', 'L')), (((0, 2), 'Z'), ((0, 4), 'Z', 'L')), (((0, 2), '1'), ((0, 2), '1', 'R')), (((0, 2), '0'), ((0, 1), '0', 'R')), (((0, 1), 'Z'), ((0, 3), 'Z', 'L')), (((0, 1), '1'), ((0, 2), '1', 'R')), (((0, 1), '0'), ((0, 1), '0', 'R')), (((0, 0), '1'), ((0, 2), '1', 'R')), (((0, 0), '0'), ((0, 1), '0', 'R')), (((0, 3), 'Z'), ((2, 0), 'Z', 'R'))], (0, 0), (2, 0), (2, 1))
 
 # Composition de machines de Turing : boucle
 #-------------------------------------------
