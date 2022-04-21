@@ -97,7 +97,7 @@ assert b2 == True, "Erreur dans le langage accepte par la machine"
 #assert i2 == 0, "Erreur dans la position de la tete de lecture"
 assert L2 == ["Z","0","1","1","Z"], "Erreur dans le mot ecrit sur la bande"
 (b1,i1,L1)=exec_MT_1(M_foo4, ["Z","1","0","1","0"],0)
-assert b1 == False, "Erreur dans le langage accepte par la machine"
+assert b1 == True, "Erreur dans le langage accepte par la machine"
 #assert i1 == 0, "Erreur dans la position de la tete de lecture"
 assert L1 == ["Z","1","0","1","0"], "Erreur dans le mot ecrit sur la bande"
 
@@ -112,7 +112,7 @@ assert L1 == ["Z","1","1","0","1","Z"], "Erreur dans le mot ecrit sur la bande"
 (b2,i2,L2) = exec_MT_1(M_foo,["0","0","0"],0)
 assert b2 == True, "Erreur dans le langage accepte par la machine"
 ##assert i2 == 0, "Erreur dans la position de la tete de lecture"
-assert L2 == ["0","0","0","Z","Z"], "Erreur dans le mot ecrit sur la bande"
+assert L2 == ["Z","0","0","0","Z","Z"], "Erreur dans le mot ecrit sur la bande"
 (b3,i3,L3) = exec_MT_1(M_foo,["1","1","0","1"],0)
 assert b3 == True, "Erreur dans le langage accepte par la machine"
 assert L3 == ["Z","1","0","1","0","0","Z"], "Erreur dans le mot ecrit sur la bande"
