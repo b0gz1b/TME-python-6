@@ -63,7 +63,7 @@ def exec_MT_1(M,L,i0):
     q = q0
     t = i0
     while True:
-        print_config_1(L,t,q,qok,qko)
+        # print_config_1(L,t,q,qok,qko)
         T = assoc_f(d,(q,L[t]))
         if T != None:
             q, ns, m = T

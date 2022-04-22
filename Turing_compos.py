@@ -173,9 +173,14 @@ def make_cond_MT(MC,M1,M2):
         if not eq_atom(q2,qc_ok) and not eq_atom(q2,qc_ko):
             d_nkC = ajout(eq_assoc,(((0,q1),a1),((0,q2),a2,m)),d_nkC)
         elif eq_atom(q2,qc_ok):
-            d_okC = ajout(eq_assoc,(((0,q1),a1),((1,q1_0),a2,m)),d_okC)
+            if d1 != []:
+                d_okC = ajout(eq_assoc,(((0,q1),a1),((1,q1_0),a2,m)),d_okC)
+            else:
+                d_okC = ajout(eq_assoc,(((0,q1),a1),((2,q2_ok),a2,m)),d_okC)
         elif eq_atom(q2,qc_ko):
             d_koC = ajout(eq_assoc,(((0,q1),a1),((2,q2_0),a2,m)),d_koC)       
+
+
 
     d = union(eq_assoc,union(eq_assoc,union(eq_assoc,union(eq_assoc,union(eq_assoc,union(eq_assoc,d_2,d_nk),d_ok1),d_ko1),d_nkC),d_okC),d_koC)
 
@@ -198,8 +203,41 @@ def exec_loop_MT_1(MC,M,L,i0):
         return (True,ic,Lc)
 
 def make_loop_MT(MC,M):
-    # MC,M : machines de Turing deterministes a 1 bande
-    return
+    dc,qc_0,qc_ok,qc_ko = MC
+    dp,qp_0,qp_ok,qp_ko = M
 
+    eq_assoc = make_eq_set(make_eq_set(eq_atom))
 
+    d_nokC = []
+    d_nokP = []
+    d_okC = []
+    d_okP = []
 
+    for (q1,a1),(q2,a2,m) in dc:
+        if not eq_atom(q2,qc_ok):
+            d_nokC = ajout(eq_assoc,(((0,q1),a1),((0,q2),a2,m)),d_nokC)
+        else:
+            d_okC = ajout(eq_assoc,(((0,q1),a1),((1,qp_0),a2,m)),d_okC)
+    for (q1,a1),(q2,a2,m) in dp:
+        if not eq_atom(q2,qp_ok):
+            d_nokP = ajout(eq_assoc,(((1,q1),a1),((1,q2),a2,m)),d_nokP)
+        else:
+            d_okP = ajout(eq_assoc,(((1,q1),a1),((0,qc_0),a2,m)),d_okP)      
+
+    d = union(eq_assoc,union(eq_assoc,union(eq_assoc,d_okC,d_nokC,),d_nokP),d_okP)
+
+    return (d,(0,qc_0),(0,qc_ko),(1,qp_ko))
+
+M_foo1 = make_loop_MT(M_eq_0,M_Right_bin)
+
+M_foo0 = make_cond_MT(M_isneg,M_prop1,M_id)
+
+M_foo2 = make_seq_MT(M_foo0,M_foo1)
+
+M_foo3 = make_seq_MT(M_Right_bin,M_compl_bin)
+
+M_eq_Z = make_test_eq("Z",["0","1","Z"])
+
+M_foo4 = make_cond_MT(M_eq_Z,M_id,M_foo3)
+
+M_foo = make_seq_MT(M_foo2,M_foo4)
